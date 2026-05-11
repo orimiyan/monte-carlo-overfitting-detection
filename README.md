@@ -129,3 +129,65 @@ Forward-test Monte Carlo comparison
 Overfitting detection
         ↓
 Decision on live deployment
+
+## Target Metrics for Out-of-Sample Validation
+
+This project will evaluate whether a strategy is ready for further use by measuring whether its risk and performance characteristics remain stable during the out-of-sample / forward-test period.
+
+The purpose of these metrics is not only to determine whether the strategy remains profitable, but also to assess whether it continues to satisfy risk constraints when exposed to unseen data. If the forward-test Monte Carlo results are significantly weaker than the backtest Monte Carlo results, this may indicate that the strategy is overfitted or not robust enough for live deployment.
+
+The key question is:
+
+Can the strategy continue to pass the same risk rules and maintain a similar performance distribution outside the original backtest sample?
+
+The main metrics targeted in this project include:
+
+1. **Out-of-sample pass probability**  
+   Measures the percentage of Monte Carlo paths that pass all defined risk rules during the forward-test period.  
+   This answers whether the strategy still survives the required constraints on unseen data.
+
+2. **Out-of-sample failure probability**  
+   Measures how often simulated paths fail due to rule breaches such as maximum drawdown, daily loss limits, or account failure thresholds.  
+   This answers how frequently the strategy becomes invalid under forward-test conditions.
+
+3. **Maximum drawdown distribution**  
+   Measures the range of maximum drawdowns across simulated paths, including median, mean, and tail drawdown levels.  
+   This answers whether the strategy’s downside risk becomes materially worse out-of-sample.
+
+4. **Daily loss breach probability**  
+   Measures the probability of breaching daily loss limits across Monte Carlo paths.  
+   This answers whether the strategy remains compatible with strict day-to-day risk limits.
+
+5. **Risk of ruin**  
+   Measures the percentage of simulated paths that hit a predefined failure or capital loss threshold.  
+   This answers whether the strategy has an unacceptable probability of severe loss.
+
+6. **Profit target achievement probability**  
+   Measures how often the strategy reaches its target return before breaching risk limits.  
+   This answers whether the strategy is not only surviving, but also producing enough return to justify use.
+
+7. **Final return distribution**  
+   Measures the spread of final simulated account outcomes across the forward-test Monte Carlo runs.  
+   This answers whether the strategy’s return profile remains similar to the backtest distribution.
+
+8. **Risk-adjusted return stability**  
+   Measures whether performance remains stable after accounting for risk, using measures such as Sharpe ratio, return-to-drawdown ratio, or profit factor.  
+   This answers whether returns are being achieved efficiently or through excessive risk.
+
+9. **Trade-level stability**  
+   Measures whether win rate, average win, average loss, payoff ratio, and profit factor remain consistent across backtest and forward-test periods.  
+   This answers whether the strategy’s underlying edge is still present on unseen data.
+
+10. **Loss clustering**  
+    Measures the frequency and severity of consecutive losses or clustered drawdowns.  
+    This answers whether the strategy is vulnerable to sequences of losses that could cause failure even if average returns appear acceptable.
+
+11. **Backtest-to-forward-test degradation**  
+    Measures how much key metrics deteriorate between the backtest Monte Carlo results and the forward-test Monte Carlo results.  
+    This answers whether the strategy’s performance has weakened materially outside the original sample.
+
+12. **Statistical comparison tests**  
+    Compares the backtest and forward-test Monte Carlo distributions using statistical methods such as t-tests, non-parametric tests, confidence intervals, or distribution distance measures.  
+    This answers whether differences between the two periods are likely to be meaningful rather than random variation.
+
+Together, these metrics create a validation framework for deciding whether a strategy should progress toward live trading. A strategy should only be considered for further use if it can pass the relevant risk rules out-of-sample and maintain a risk profile that is broadly consistent with the backtest results.
