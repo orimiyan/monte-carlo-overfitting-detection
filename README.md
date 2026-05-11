@@ -129,6 +129,7 @@ Forward-test Monte Carlo comparison
 Overfitting detection
         ↓
 Decision on live deployment
+```
 
 ## Target Metrics for Out-of-Sample Validation
 
